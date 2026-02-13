@@ -35,8 +35,9 @@ __all__ = (
     "TurnQueue",
 )
 
+import dataclasses
 import heapq
-from typing import Generic, Iterable, NamedTuple, TypeVar
+from typing import Generic, NamedTuple, TypeVar
 
 T = TypeVar("T")
 
@@ -70,22 +71,19 @@ class Ticket(NamedTuple, Generic[T]):
         return self.get_time_passed(current_time) / (self.time - self.insert_time)
 
 
+@dataclasses.dataclass(eq=False)
 class TurnQueue(Generic[T]):
     """Turned queue manager."""
 
-    def __init__(
-        self,
-        time: int = 0,
-        next_uid: int = 0,
-        heap: Iterable[Ticket[T]] = (),
-    ) -> None:
-        """Initialize the scheduler."""
-        self.time = time
-        """The current tick. Always the time of the most recently popped ticket."""
-        self.next_uid = next_uid
-        """Incrementing unique id used to enforce FIFO order on tickets."""
-        self.heap: list[Ticket[T]] = list(heap)
-        """The heap queue of events maintained by Python's `heapq` module."""
+    time: int = 0
+    """The current tick. Always the time of the most recently popped ticket."""
+    next_uid: int = 0
+    """Incrementing unique id used to enforce FIFO order on tickets."""
+    heap: list[Ticket[T]] = dataclasses.field(default_factory=list)
+    """A min-heap queue of events maintained by Python's `heapq` module."""
+
+    def __post_init__(self) -> None:
+        """Ensure heap is sorted."""
         heapq.heapify(self.heap)
 
     def __bool__(self) -> bool:
@@ -117,7 +115,3 @@ class TurnQueue(Generic[T]):
         ticket = heapq.heappop(self.heap)
         self.time = ticket.time
         return ticket
-
-    def __repr__(self) -> str:
-        """A string representation of this instance, including all tickets."""
-        return f"{self.__class__.__name__}(time={self.time!r}, next_uid={self.next_uid!r}, heap={self.heap!r})"
