@@ -16,9 +16,10 @@ classifiers = [ # https://pypi.org/classifiers/
 ]
 
 [project.urls] # https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#urls
-Repository = "https://github.com/HexDecimal/tqueue"
-Issues = "https://github.com/HexDecimal/tqueue/issues"
-Changelog = "https://github.com/HexDecimal/tqueue/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/HexDecimal/turnq"
+Repository = "https://github.com/HexDecimal/turnq"
+Issues = "https://github.com/HexDecimal/turnq/issues"
+Changelog = "https://github.com/HexDecimal/turnq/blob/main/CHANGELOG.md"
 
 [tool.setuptools_scm]
 write_to = "turnq/_version.py"
