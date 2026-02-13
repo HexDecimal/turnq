@@ -7,7 +7,7 @@ from typing import Any, Callable
 
 import tqueue
 
-# ruff: noqa: D103
+# ruff: noqa: D103, T201
 
 
 @dataclasses.dataclass

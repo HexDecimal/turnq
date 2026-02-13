@@ -67,9 +67,7 @@ class Ticket(NamedTuple, Generic[T]):
 
     def get_progress(self, current_time: int) -> float:
         """Return the current progress of this Ticket as a float from 0 to 1."""
-        return self.get_time_passed(current_time) / (
-            self.time - self.insert_time
-        )
+        return self.get_time_passed(current_time) / (self.time - self.insert_time)
 
 
 class TurnQueue(Generic[T]):
