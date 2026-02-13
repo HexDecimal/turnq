@@ -1,0 +1,117 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Package
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "*"
+    tags:
+      - "*.*.*"
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: pre-commit/action@v3.0.1
+
+  mypy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+      - name: Install package
+        run: pip install mypy --editable .
+      - name: Mypy
+        run: mypy --output=json | jq -r '"::error title=Mypy issue,file=\(.file),line=\(.line),col=\(.column)::\(.message)"'
+
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        python-version:
+          ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14", "3.15-dev"]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        name: Setup Python ${{ matrix.python-version }}
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install package
+        run: pip install pytest pytest-cov --editable .
+      - name: Run tests
+        run: pytest --cov-report=xml
+      - name: Upload coverage
+        uses: codecov/codecov-action@v5
+
+  build-dist:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Install build
+        run: pip install build
+      - name: Build package
+        run: python -m build
+      - uses: actions/upload-artifact@v6
+        with:
+          name: python-dist
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
+
+  deploy:
+    needs: [build-dist]
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: pypi
+      url: https://pypi.org/project/turnq/${{ github.ref_name }}/
+    permissions:
+      id-token: write # attestation
+    steps:
+      - uses: actions/download-artifact@v7
+        with:
+          name: python-dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+
+  release:
+    if: github.ref_type == 'tag'
+    name: Create Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write # GitHub Releases
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Generate body
+        run: scripts/get_release_description.py | tee release_body.md
+      - name: Create Release
+        id: create_release
+        uses: ncipollo/release-action@v1
+        with:
+          bodyFile: release_body.md

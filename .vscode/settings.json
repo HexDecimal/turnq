@@ -14,13 +14,23 @@
     "[python]": {
         "editor.defaultFormatter": "charliermarsh.ruff"
     },
+    "mypy-type-checker.importStrategy": "fromEnvironment",
     "cSpell.words": [
         "autoupdate",
+        "buildapi",
+        "cooldown",
         "docstrings",
         "mypy",
+        "ncipollo",
         "pydocstyle",
+        "pypa",
+        "pypi",
+        "pytest",
+        "setuptools",
         "subclassing",
-        "tqueue"
+        "tqueue",
+        "turnq",
+        "zizmor"
     ],
     "python.testing.pytestArgs": [
         "."

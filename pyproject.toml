@@ -1,15 +1,31 @@
+[build-system]
+requires = ["flit_scm"]
+build-backend = "flit_scm:buildapi"
+
 [project] # https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
-name = "tqueue"
+name = "turnq"
 readme = "README.md"
 license = "Unlicense"
 dynamic = ["version", "description"]
 requires-python = ">=3.8"
 classifiers = [ # https://pypi.org/classifiers/
-    "Development Status :: 5 - Production/Stable",
+    "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3",
     "Typing :: Typed",
 ]
+
+[project.urls] # https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#urls
+Repository = "https://github.com/HexDecimal/tqueue"
+Issues = "https://github.com/HexDecimal/tqueue/issues"
+Changelog = "https://github.com/HexDecimal/tqueue/blob/main/CHANGELOG.md"
+
+[tool.setuptools_scm]
+write_to = "turnq/_version.py"
+
+[tool.coverage.report] # https://coverage.readthedocs.io/en/latest/config.html
+exclude_lines = ['^\s*\.\.\.', "if TYPE_CHECKING:", "# pragma: no cover"]
+omit = ["_version.py"]
 
 [tool.mypy] # https://mypy.readthedocs.io/en/stable/config_file.html
 files = "."
