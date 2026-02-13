@@ -1,9 +1,15 @@
-[project]
+[project] # https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
 name = "tqueue"
 readme = "README.md"
-license = { file = "LICENSE" }
+license = "Unlicense"
 dynamic = ["version", "description"]
 requires-python = ">=3.8"
+classifiers = [ # https://pypi.org/classifiers/
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Typing :: Typed",
+]
 
 [tool.mypy] # https://mypy.readthedocs.io/en/stable/config_file.html
 files = "."
@@ -25,13 +31,16 @@ warn_return_any = true
 no_implicit_reexport = true
 strict_equality = true
 
-[tool.ruff] # https://docs.astral.sh/ruff/rules/
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint] # https://docs.astral.sh/ruff/rules/
 select = ["ALL"]
 ignore = [
+    "COM",  # flake8-commas
     "E501", # line-too-long
     "S101", # assert
 ]
-line-length = 120
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "google" # Use Google-style docstrings
