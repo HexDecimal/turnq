@@ -48,6 +48,12 @@ warn_return_any = true
 no_implicit_reexport = true
 strict_equality = true
 
+[tool.pytest.ini_options]
+minversion = "6.0"
+required_plugins = ["pytest-cov"]
+testpaths = ["."]
+addopts = "--doctest-modules --doctest-glob='*.md' --cov=turnq --cov-report=term-missing"
+
 [tool.ruff]
 line-length = 120
 
