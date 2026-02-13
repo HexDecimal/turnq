@@ -16,6 +16,10 @@
     },
     "cSpell.words": [
         "autoupdate",
+        "docstrings",
+        "mypy",
+        "pydocstyle",
+        "subclassing",
         "tqueue"
     ],
     "python.testing.pytestArgs": [
