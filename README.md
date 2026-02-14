@@ -8,6 +8,8 @@
 
 A turn-based scheduler built on top of heapq.
 
+An API reference is available [here](https://turnq.readthedocs.io).
+
 ```py
 
 >>> import turnq

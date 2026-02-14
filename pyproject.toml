@@ -20,6 +20,7 @@ Homepage = "https://github.com/HexDecimal/turnq"
 Repository = "https://github.com/HexDecimal/turnq"
 Issues = "https://github.com/HexDecimal/turnq/issues"
 Changelog = "https://github.com/HexDecimal/turnq/blob/main/CHANGELOG.md"
+Documentation = "https://turnq.readthedocs.io"
 
 [tool.setuptools_scm]
 write_to = "turnq/_version.py"
