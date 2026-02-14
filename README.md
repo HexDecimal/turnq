@@ -1,5 +1,11 @@
 # turnq
 
+[![PyPI](https://img.shields.io/pypi/v/turnq)](https://pypi.org/project/turnq/)
+[![PyPI - License](https://img.shields.io/pypi/l/turnq)](https://github.com/HexDecimal/turnq/blob/main/LICENSE)
+[![Documentation Status](https://readthedocs.org/projects/turnq/badge/?version=latest)](https://turnq.readthedocs.io)
+[![codecov](https://codecov.io/gh/HexDecimal/turnq/branch/main/graph/badge.svg?token=4Ak5QpTLZB)](https://codecov.io/gh/HexDecimal/turnq)
+[![CommitsSinceLastRelease](https://img.shields.io/github/commits-since/HexDecimal/turnq/latest)](https://github.com/HexDecimal/turnq/blob/main/CHANGELOG.md)
+
 A turn-based scheduler built on top of heapq.
 
 ```py
