@@ -74,7 +74,7 @@ jobs:
         run: pip install build
       - name: Build package
         run: python -m build
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: python-dist
           path: dist/*
@@ -93,7 +93,7 @@ jobs:
     permissions:
       id-token: write # attestation
     steps:
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: python-dist
           path: dist/
