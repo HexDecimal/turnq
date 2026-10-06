@@ -16,7 +16,7 @@ project = "turnq"
 copyright = "2026, Kyle Benesch"  # noqa: A001
 author = "Kyle Benesch"
 
-release = subprocess.check_output(("git", "describe", "--always", "--abbrev=0"), text=True).strip()
+release = subprocess.check_output(("git", "describe", "--always", "--abbrev=0"), text=True).strip()  # noqa: S607
 version = ".".join(release.split(".")[:2])
 
 # -- General configuration ---------------------------------------------------
